@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&family=VT323&display=swap');
+@import "../colors.scss";
+
+%card {
+  padding: 0.6rem 1rem;
+  font-family: 'Nova Mono', monospace;
+  font-size: 1.2rem;
+  color: $white;
+  background-color: $black;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 480px;
+  padding: 0.8rem;
+  margin: 0 auto;
+
+  a {
+    color: $green;
+
+    &:hover {
+      color: $dark-green;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .input {
+      @extend %card;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      margin: 1rem 0;
+      font-size: 1.4rem;
+      font-weight: bolder;
+      color: $white;
+      text-transform: uppercase;
+      background-color: $green;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: $darker-green;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+
+  .result {
+    @extend %card;
+  }
+}
