@@ -1,0 +1,65 @@
+@import "../../colors.scss";
+
+.hint {
+  position: relative;
+  padding: 1rem;
+  margin: 0.6rem 0;
+  color: $light-blue;
+  background-color: $darker-blue;
+  border-radius: 12px;
+
+  .dismissBtn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 0.8rem;
+    color: $light-blue;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .title {
+    margin: 0;
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .content {
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+
+    a {
+      color: $green;
+
+      &:hover {
+        color: $dark-green;
+      }
+    }
+  }
+}
+
+.needHelpBtn {
+  padding: 0.8rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: $light-blue;
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: $dark-blue;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $darker-blue;
+  }
+}

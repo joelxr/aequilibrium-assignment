@@ -1,23 +1,17 @@
 <main class="app">
-  <section>
+  <section class="title">
     <h1>Pick a fight! 👊 </h1>
     <h3>
       Choose transformers to battle and see which team comes out the winner. Autobots or Decepticons.
       Give it a try! 🚚 🐲
     </h3>
-    <h3>
-      See 
-      <a href="http://www.ntfa.net/ntfa/techspecs/index.php?cat=Gen1&group=DeceptPZ&char=Predaking" target="_blank">here</a>
-      who can join each team.
-    </h3>
   </section>
+  <app-battle-hint-card></app-battle-hint-card>
   <section class="form">
-    <textarea class="input" rows="10" cols="40"></textarea>
-    <button class="btn">Fight</button>
+    <app-battle-input (battleDataInput)="battleInput = $event"></app-battle-input>
+    <button class="btn" (click)="startBattle()">Fight</button>
   </section>
   <section class="result">
-    <p>1 battle</p>
-    <p>Winning team (Decepticons): Soundwave</p>
-    <p> Survivors from the losing team (Autobots): Hubcap </p>
   </section>
+  <app-battle-result [result]="battleResult"></app-battle-result>
 </main>

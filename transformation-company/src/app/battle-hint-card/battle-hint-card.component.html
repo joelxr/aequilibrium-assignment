@@ -1,0 +1,17 @@
+<section>
+  <div class="hint" *ngIf="visible">
+    <p class="title">Getting started</p>
+    <div class="content">
+      To entry data and start a battle is pretty simple!
+      Each line must have a transform name followed by a letter to represent his team - (A) Autobots, (D) Decepticons - and all attributes in this order: Strength, Intelligence, Speed, Endurance, Rank, Courage, Firepower and Skill. All this must be separeted by comma. See the example:
+      <pre>
+Soundwave, D, 8,9,2,6,7,5,6,10
+Bluestreak, A, 6,6,7,9,5,2,9,7
+Hubcap, A, 4,4,4,4,4,4,4,4</pre>
+      See <a href="http://www.ntfa.net/ntfa/techspecs/index.php?cat=Gen1&group=DeceptPZ&char=Predaking" target="_blank">here</a> to check transformers data. Enjoy!
+    </div>
+    <button type="button" class="dismissBtn" (click)="visible = false" >Got it</button>
+  </div>
+  <button type="button" class="needHelpBtn" *ngIf="!visible" (click)="visible = true">More info</button>
+</section>
+
