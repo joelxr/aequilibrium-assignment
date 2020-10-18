@@ -3,70 +3,11 @@ import { Transformer } from './shared/types/transformer';
 import { TransformerDifference } from './shared/types/transformerDifference';
 import { BattleResult } from './shared/types/battleResult';
 import { FaceOffResult } from './shared/types/faceOffResult';
-import generateWalkoverResult from './shared/util/generateWalkOverResult';
 
-function getWinnerBySuperiority(t1: Transformer, t2: Transformer): FaceOffResult {
-  if (t1.isSuperior && t2.isSuperior) {
-    throw Error('Destruction error!');
-  } else if (t1.isSuperior) {
-    return {
-      winner: t1,
-      loser: t2
-    };
-  } else if (t2.isSuperior) {
-    return {
-      winner: t2,
-      loser: t1
-    };
-  }
-}
-
-function getWinnerByScaredOffTheOpponent(t1: Transformer, t2: Transformer, diff: TransformerDifference): FaceOffResult {
-  if (diff.courage >= 4 && diff.strength >= 3) {
-    return {
-      winner: t1,
-      loser: t2
-    };
-  } else if (diff.courage <= -4 && diff.strength <= -3) {
-    return {
-      winner: t2,
-      loser: t1
-    };
-  }
-}
-
-function getWinnerByBeingMoreSkilled(t1: Transformer, t2: Transformer, diff: TransformerDifference): FaceOffResult {
-  const t1HasAdvantage = Object.values(diff).filter(d => d >= 3).length;
-  const t2HasAdvantage = Object.values(diff).filter(d => d <= -3).length;
-
-  if (t1HasAdvantage > t2HasAdvantage) {
-    return {
-      winner: t1,
-      loser: t2
-    };
-  } else if (t2HasAdvantage > t1HasAdvantage) {
-    return {
-      winner: t2,
-      loser: t1
-    };
-  }
-}
-
-function getWinnerByOverallRating(t1: Transformer, t2: Transformer): FaceOffResult {
-  if (t1.overallRating > t2.overallRating) {
-    return {
-      winner: t1,
-      loser: t2
-    };
-  } else if (t2.overallRating > t2.overallRating ) {
-    return {
-      winner: t1,
-      loser: t2
-    };
-  } else {
-    return { tie: true };
-  }
-}
+import getWinnerByBeingMoreSkilled from './shared/util/getWinnerByBeingMoreSkilled';
+import getWinnerBySuperiority from './shared/util/getWinnerBySuperiority';
+import getWinnerByScaredOffTheOpponent from './shared/util/getWinnerByScaredOffTheOpponent';
+import getWinnerByOverallRating from './shared/util/getWinnerByOverallRating';
 
 /**
  * Function to perform a single battle between two given fighters.
@@ -78,21 +19,19 @@ function getWinnerByOverallRating(t1: Transformer, t2: Transformer): FaceOffResu
  * @return FaceOffResult winner and loser of this single battle, can be a tie as well
  */
 function faceOff(t1: Transformer, t2: Transformer): FaceOffResult {
-
   let result = getWinnerBySuperiority(t1, t2);
 
   if (result) {
     return result;
   }
 
-  const diff = t1.difference(t2);
-  result = getWinnerByScaredOffTheOpponent(t1, t2, diff);
+  result = getWinnerByScaredOffTheOpponent(t1, t2);
 
   if (result) {
     return result;
   }
 
-  result = getWinnerByBeingMoreSkilled(t1, t2, diff);
+  result = getWinnerByBeingMoreSkilled(t1, t2);
 
   if (result) {
     return result;
@@ -103,24 +42,19 @@ function faceOff(t1: Transformer, t2: Transformer): FaceOffResult {
 }
 
 export function fight(transformers: Array<Transformer>): BattleResult {
-  const autobots = transformers
-    .filter(t => t.team === Team.AUTOBOT)
-    .sort((t1, t2) => t1.rankComparator(t2));
-
-  const deceptions = transformers
-    .filter(t => t.team === Team.DECEPTICON)
-    .sort((t1, t2) => t1.rankComparator(t2));
+  const autobots = transformers .filter(t => t.team === Team.AUTOBOT) .sort((t1, t2) => t1.rankComparator(t2));
+  const deceptions = transformers .filter(t => t.team === Team.DECEPTICON) .sort((t1, t2) => t1.rankComparator(t2));
 
   if (!autobots.length && !deceptions.length) {
     return new BattleResult(0, null, null, null, null, null, 'No competitors');
   }
 
   if (!autobots.length) {
-    return generateWalkoverResult(Team.DECEPTICON, deceptions);
+    return new BattleResult(0, Team.DECEPTICON, deceptions, Team.AUTOBOT, null, null, `W.O. victory! Autobots didn't showed up!`);
   }
 
   if (!deceptions.length) {
-    return generateWalkoverResult(Team.AUTOBOT, autobots);
+    return new BattleResult(0, Team.AUTOBOT, autobots, Team.DECEPTICON, null, null, `W.O. victory! Decepticons didn't showed up!`);
   }
 
   let startingTeam: Array<Transformer>;
@@ -139,17 +73,16 @@ export function fight(transformers: Array<Transformer>): BattleResult {
   const losers: Array<Transformer> = [];
 
   try {
-  startingTeam.forEach((member, index) => {
-    const opponent = otherTeam[index];
-    const { winner, loser, tie } = faceOff(member, opponent);
+    startingTeam.forEach((member, index) => {
+      const opponent = otherTeam[index];
+      const { winner, loser, tie } = faceOff(member, opponent);
 
-    if (!tie) {
-      winners.push(winner);
-      losers.push(loser);
-    }
-  });
+      if (!tie) {
+        winners.push(winner);
+        losers.push(loser);
+      }
+    });
   } catch (err) {
-    console.error(err);
     return new BattleResult(0, null, null, null, null, null, 'Evertyhing has been destroyed!');
   }
 
@@ -157,23 +90,9 @@ export function fight(transformers: Array<Transformer>): BattleResult {
   const winnersFromDecepticons = winners.filter(winner => winner.team === Team.DECEPTICON);
 
   if (winnersFromAutobots.length > winnersFromDecepticons.length) {
-    return new BattleResult(
-      turns,
-      Team.AUTOBOT,
-      autobots,
-      Team.DECEPTICON,
-      deceptions,
-      winnersFromDecepticons,
-      null);
+    return new BattleResult(turns, Team.AUTOBOT, autobots, Team.DECEPTICON, deceptions, winnersFromDecepticons, null);
   } else if (winnersFromAutobots.length < winnersFromDecepticons.length) {
-    return new BattleResult(
-      turns,
-      Team.DECEPTICON,
-      deceptions,
-      Team.AUTOBOT,
-      autobots,
-      winnersFromAutobots,
-      null);
+    return new BattleResult(turns, Team.DECEPTICON, deceptions, Team.AUTOBOT, autobots, winnersFromAutobots, null);
   } else {
     return new BattleResult(turns, null, null, null, null, null, 'A TIE!!');
   }
