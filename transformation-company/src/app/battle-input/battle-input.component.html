@@ -1,8 +1,10 @@
 <textarea
   class="input"
+  [ngClass]="{'hasError': dirty && !!error, 'success': dirty && !error}"
   rows="10"
   cols="40"
   (input)="onInputData($event)"
   placeholder="Insert data here..."
 >
 </textarea>
+<p *ngIf="!!error" class="hint">{{ error }}</p>

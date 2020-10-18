@@ -8,8 +8,9 @@
   </section>
   <app-battle-hint-card></app-battle-hint-card>
   <section class="form">
-    <app-battle-input (battleDataInput)="battleInput = $event"></app-battle-input>
-    <button class="btn" (click)="startBattle()">Fight</button>
+    <app-battle-input (battleDataInput)="battleInput = $event" (battleDataInputError)=
+      "battleInputError = !!$event"></app-battle-input>
+    <button class="btn" [ngClass]="{'disabled': battleInputError}" [disabled]="battleInputError" (click)="startBattle()">Fight</button>
   </section>
   <section class="result">
   </section>

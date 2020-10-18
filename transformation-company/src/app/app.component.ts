@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { parse, Transformer } from '../shared/types/transform';
+import { Transformer } from '../shared/types/transformer';
+import parseTransformers from '../shared/util/parseTrasformers';
 import { fight } from '../battle';
 
 @Component({
@@ -11,11 +12,12 @@ export class AppComponent {
   title = 'transformation-company';
 
   battleInput = '';
+  battleInputError = false;
   battleResult = [];
 
   startBattle(): void {
-    const lines = this.battleInput.split('\n');
-    const transforms: Array<Transformer> = lines.map(l => parse(l));
-    this.battleResult = fight(transforms);
+    if (!this.battleInputError) {
+      fight(parseTransformers(this.battleInput));
+    }
   }
 }
