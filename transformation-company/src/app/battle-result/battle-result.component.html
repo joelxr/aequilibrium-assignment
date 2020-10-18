@@ -1,1 +1,6 @@
-<div class="result">{{ result }}</div>
+<div *ngIf="!!result" class="result">
+  <p>{{ result.turns }} battle(s)</p>
+  <p *ngIf="!!result.winner">{{ result.winnersSentence }}</p>
+  <p *ngIf="!!result.loser">{{ result.losersSentence }}</p>
+  <p *ngIf="!!result.message">{{ result.message}}</p>
+</div>

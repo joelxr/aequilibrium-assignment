@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Transformer } from '../shared/types/transformer';
+import { BattleResult } from '../shared/types/battleResult';
 import parseTransformers from '../shared/util/parseTrasformers';
 import { fight } from '../battle';
 
@@ -13,11 +14,11 @@ export class AppComponent {
 
   battleInput = '';
   battleInputError = false;
-  battleResult = [];
+  battleResult: BattleResult;
 
   startBattle(): void {
     if (!this.battleInputError) {
-      fight(parseTransformers(this.battleInput));
+      this.battleResult = fight(parseTransformers(this.battleInput));
     }
   }
 }

@@ -41,6 +41,10 @@ export class Transformer {
     return this.strength + this.intelligence + this.speed + this.endurance + this.endurance;
   }
 
+  get isSuperior(): boolean {
+    return /(OPTIMUS PRIME|PREDAKING)/gi.test(this.name);
+  }
+
   difference(other: Transformer): TransformerDifference {
     return {
       courage: this.courage - other.courage,
