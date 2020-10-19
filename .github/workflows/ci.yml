@@ -35,5 +35,5 @@ jobs:
       - name: Running tests (transformation company)
         working-directory: transformation-company
         run: |
-          npm run test
+          npm run test:ci
 
