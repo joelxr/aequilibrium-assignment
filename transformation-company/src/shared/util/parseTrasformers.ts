@@ -13,8 +13,8 @@ function validateLine(line: Array<string>, index: number): void {
   }
 
   const validaNumber = (num) => {
-    if (typeof num === 'undefined' || num === '' || isNaN(Number(num)) || Number(num) < 0 || Number(num) > 10) {
-      throw Error(`Invalid number at line ${index + 1}, got "${num}". Should be an integer between 0 and 10.`);
+    if (typeof num === 'undefined' || num === '' || isNaN(Number(num)) || Number(num) < 0 || Number(num) > 10 || Number(num) % 1 !== 0) {
+      throw Error(`Invalid number at line ${index + 1}, got: "${num}". Should be an integer between 0 and 10.`);
     }
   };
 
@@ -29,11 +29,11 @@ function validateLine(line: Array<string>, index: number): void {
 }
 
 export default function parseTransformers(input: string): Array<Transformer> {
-  if (!input) {
+  if (!input || !input.trim()) {
     throw Error('A valid input must be provided.');
   }
 
-  const lines = input.split('\n');
+  const lines = input.trim().split('\n');
 
   if (!lines.length) {
     throw Error('A valid input must be provided.');
@@ -67,5 +67,4 @@ export default function parseTransformers(input: string): Array<Transformer> {
   });
 
   return transformers;
-
 }
