@@ -83,7 +83,7 @@ export function fight(transformers: Array<Transformer>): BattleResult {
       }
     });
   } catch (err) {
-    return new BattleResult(0, null, null, null, null, null, 'Evertyhing has been destroyed!');
+    return new BattleResult(0, null, null, null, null, null, 'Everything has been destroyed!');
   }
 
   const winnersFromAutobots = winners.filter(winner => winner.team === Team.AUTOBOT);
@@ -92,10 +92,10 @@ export function fight(transformers: Array<Transformer>): BattleResult {
   const losersFromDecepticons = losers.filter(loser => loser.team === Team.DECEPTICON);
 
   if (winnersFromAutobots.length > winnersFromDecepticons.length) {
-    const survivors = deceptions.filter(d => losersFromDecepticons.includes(d));
+    const survivors = deceptions.filter(d => !losersFromDecepticons.includes(d));
     return new BattleResult(turns, Team.AUTOBOT, autobots, Team.DECEPTICON, deceptions, survivors, null);
   } else if (winnersFromAutobots.length < winnersFromDecepticons.length) {
-    const survivors = autobots.filter(d => losersFromAutobots.includes(d));
+    const survivors = autobots.filter(d => !losersFromAutobots.includes(d));
     return new BattleResult(turns, Team.DECEPTICON, deceptions, Team.AUTOBOT, autobots, survivors, null);
   } else {
     return new BattleResult(turns, null, null, null, null, null, 'A TIE!!');
