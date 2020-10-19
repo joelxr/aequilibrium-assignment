@@ -88,11 +88,15 @@ export function fight(transformers: Array<Transformer>): BattleResult {
 
   const winnersFromAutobots = winners.filter(winner => winner.team === Team.AUTOBOT);
   const winnersFromDecepticons = winners.filter(winner => winner.team === Team.DECEPTICON);
+  const losersFromAutobots = losers.filter(loser => loser.team === Team.AUTOBOT);
+  const losersFromDecepticons = losers.filter(loser => loser.team === Team.DECEPTICON);
 
   if (winnersFromAutobots.length > winnersFromDecepticons.length) {
-    return new BattleResult(turns, Team.AUTOBOT, autobots, Team.DECEPTICON, deceptions, winnersFromDecepticons, null);
+    const survivors = deceptions.filter(d => losersFromDecepticons.includes(d));
+    return new BattleResult(turns, Team.AUTOBOT, autobots, Team.DECEPTICON, deceptions, survivors, null);
   } else if (winnersFromAutobots.length < winnersFromDecepticons.length) {
-    return new BattleResult(turns, Team.DECEPTICON, deceptions, Team.AUTOBOT, autobots, winnersFromAutobots, null);
+    const survivors = autobots.filter(d => losersFromAutobots.includes(d));
+    return new BattleResult(turns, Team.DECEPTICON, deceptions, Team.AUTOBOT, autobots, survivors, null);
   } else {
     return new BattleResult(turns, null, null, null, null, null, 'A TIE!!');
   }
