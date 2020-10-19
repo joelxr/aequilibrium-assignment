@@ -47,11 +47,9 @@ export class BattleResult {
   }
 
   get losersSentence(): string {
-    if (this.loser && this.loser.team) {
+    if (this.loser && this.loser.team && this.loser.survivors && this.loser.survivors.length) {
       const teamName = this.loser.team === Team.AUTOBOT ? 'Autobots' : 'Decepticons';
-      const membersNames =
-        this.loser.survivors && this.loser.survivors.length ?
-        this.loser.survivors.map(m => m.name).join(', ') : 'no survivors';
+      const membersNames = this.loser.survivors.map(m => m.name).join(', ');
       return `Survivors from the losing team (${teamName}): ${membersNames}.`;
     } else {
       return '';
