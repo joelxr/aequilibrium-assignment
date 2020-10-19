@@ -8,13 +8,32 @@ on:
       - main
 
 jobs:
-  example_job:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Angular Full CI
-        working-directory: ./transformation-company
-        uses: colbyhill21/angular-full-ci/@v1.0
+      - uses: actions/checkout@v1
+      - name: Set Node.js 10.x
+        uses: actions/setup-node@master
         with:
-          testcommand: run test:ci
-          mocha: true
+          node-version: 10.x
+
+      - name: Install dependencies (castle company)
+        working-directory: castle-company
+        run: |
+          npm install
+
+      - name: Running tests (castle company)
+        working-directory: castle-company
+        run: |
+          npm run test
+
+      - name: Install dependencies (transformation company)
+        working-directory: transformation-company
+        run: |
+          npm install
+
+      - name: Running tests (transformation company)
+        working-directory: transformation-company
+        run: |
+          npm run test
+
