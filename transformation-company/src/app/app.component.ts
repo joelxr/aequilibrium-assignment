@@ -16,6 +16,14 @@ export class AppComponent {
   battleInputError = false;
   battleResult: BattleResult;
 
+  onBattleDataInput(event): void {
+    if (this.battleInput !== event) {
+      this.battleResult = null;
+    }
+
+    this.battleInput = event;
+  }
+
   startBattle(): void {
     if (!this.battleInputError) {
       this.battleResult = fight(parseTransformers(this.battleInput));
