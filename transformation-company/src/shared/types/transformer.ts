@@ -59,9 +59,9 @@ export class Transformer {
   }
 
   rankComparator(other: Transformer): number {
-    if (this.rank < other.rank) {
+    if (this.rank > other.rank) {
       return -1;
-    } else if (this.rank > other.rank) {
+    } else if (this.rank < other.rank) {
       return 1;
     } else {
       return 0;
