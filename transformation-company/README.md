@@ -1,27 +1,24 @@
-# TransformationCompany
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2c0c5e7d-b485-45d5-846b-2a284ec97d0b/deploy-status)](https://app.netlify.com/sites/laughing-boyd-3e3a3c/deploys)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
+# `trasnformation-company`
 
-## Development server
+The Transformers at a war a here goes a webapp to settle the score down! 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Live [here](https://laughing-boyd-3e3a3c.netlify.app/)!
 
-## Code scaffolding
+## Running it locally server
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
-## Build
+## How to use it
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+ To entry data and start a battle is pretty simple!
+Each line must have a transform name followed by a letter to represent his team - (A) Autobots, (D) Decepticons - and all attributes in this order: Strength, Intelligence, Speed, Endurance, Rank, Courage, Firepower and Skill. All this must be separeted by comma. See the example:
 
-## Running unit tests
+```
+Soundwave, D, 8,9,2,6,7,5,6,10
+Bluestreak, A, 6,6,7,9,5,2,9,7
+Hubcap, A, 4,4,4,4,4,4,4,4
+```
+Click [here](http://www.ntfa.net/ntfa/techspecs/index.php?cat=Gen1&group=DeceptPZ&char=Predaking") to check transformers data. Enjoy!
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
